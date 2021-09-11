@@ -1,23 +1,22 @@
-import FirstComponent from "./Components/FirstComponent/FirstComponent";
-import { MessageComponent } from "./Components/MessageComponent/MessageComponent";
-import SecondComponent from './Components/SecondComponent/SecondComponent';
-import { StyledComponent } from './Components/StyledComponent/StyledComponent';
+import React from 'react';
+import Message from './Components/MessegeComponent /MessageComponent';
 
-const testProps = 'Hello guys, this is testProps';
-const someObj = {
-  text: 'This is SecondComponent',
-  number: 7,
+import StyledText from "./Components/StyledText/StyledComponent";
+
+const testText = 'HI WORLD '
+const testFunction = () => {
+  console.log('test');
 }
-const messageText = 'Hi, this is Message Text'
+
+console.log('render');
+
 
 function App() {
   return (
-    <div className="App">
-      <FirstComponent firstProps="1" secondProps={testProps} />
-      <SecondComponent obj={someObj} />
-      <StyledComponent />
-      <MessageComponent Message={messageText} />
-    </div>
+    <>
+      <StyledText text={testText} test={testFunction} />
+      <Message />
+    </>
   );
 }
 
