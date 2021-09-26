@@ -4,7 +4,7 @@ import ProfileForm from "../ProfileForm/ProfileForm";
 import ProfileCheckbox from "../ProfileCheckbox/ProfileCheckbox";
 
 function Profile() {
-  const stateProfile = useSelector((state) => state);
+  const stateProfile = useSelector((state) => state.profileReducer);
   console.log(stateProfile);
 
   const dispatch = useDispatch();
