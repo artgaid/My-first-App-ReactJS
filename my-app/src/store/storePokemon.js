@@ -12,7 +12,7 @@ const pokemonsReducer = (state = initialState, { type, payload }) => {
       return state.filter((el) => el.id !== payload);
 
     case ADD_POKEMONS:
-      return [...state, payload];
+      return [payload, ...state];
 
     case GET_POKEMONS:
       return [...payload];

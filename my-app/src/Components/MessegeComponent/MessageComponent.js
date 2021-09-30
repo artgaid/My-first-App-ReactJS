@@ -1,35 +1,31 @@
-import { Link } from "react-router-dom";
-import { List, ListItem, ListItemIcon, Typography } from "@material-ui/core";
-import FolderIcon from "@material-ui/icons/Folder";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { Box } from "@material-ui/system";
 import { useEffect, useState, useRef } from "react";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "../../actions/messageAction";
-import { addChats, deleteChats } from "../../actions/chatsAction";
+import { addMessage, robotMessage } from "../../actions/messageAction";
+import { addChats } from "../../actions/chatsAction";
+import Chats from "../ChatsComponent/ChatsComponent";
 
-function MessageChats() {
-  const messageStore = useSelector((state) => state.messageReducer);
-  const chatsStore = useSelector((state) => state.chatsReducer);
+function Message() {
+  const messageStore = useSelector((state) => state.messageReducer.messageList);
+  const messageStoreRobot = useSelector(
+    (state) => state.messageReducer.messageRobot
+  );
 
   const [newMessageText, setNewMessageText] = useState("");
 
   const [newMessageAuth, setNewMessageAuth] = useState("");
 
+  const [robotText, setRobotText] = useState("");
+
   const newMessage = {
     text: newMessageText,
-    nameTo: newMessageAuth,
+    nameTo: newMessageAuth || messageStore[messageStore.length - 1].nameTo,
     messageId: messageStore.length,
-    chatId: 0,
-    robot: "",
+    chatId: messageStore[messageStore.length - 1].chatId,
   };
-
-  const filterChats = chatsStore.filter((el) => el.chatId === el.messageId);
-  console.log(filterChats);
 
   const ref = useRef(null);
 
@@ -43,25 +39,22 @@ function MessageChats() {
 
   const dispatch = useDispatch();
 
-  const deleteHandler = (id) => {
-    dispatch(deleteChats(id));
-  };
-
   const changeMessageHandler = (e) => {
     e.preventDefault();
 
     if (newMessage.nameTo === messageStore[messageStore.length - 1].nameTo) {
-      newMessage.robot = "How are you ???";
+      dispatch(robotMessage("How are you ???"));
     } else {
       if (newMessage.text !== "") {
-        newMessage.robot = "Hi, I am Robot !";
-        newMessage.chatId = chatsStore.length + 1;
+        dispatch(robotMessage("Hi, I am Robot !"));
+        newMessage.chatId++;
       }
     }
 
     if (newMessage.text !== "") {
-      dispatch(addMessage(newMessage));
       dispatch(addChats(newMessage));
+      dispatch(addMessage(newMessage));
+      setRobotText((prev) => (prev = ""));
       setNewMessageAuth((prev) => (prev = ""));
       setNewMessageText((prev) => (prev = ""));
     }
@@ -70,7 +63,8 @@ function MessageChats() {
 
   useEffect(() => {
     ref?.current.focus();
-  }, [messageStore]);
+    setRobotText(messageStoreRobot[messageStoreRobot.length - 1]?.text);
+  }, [messageStoreRobot]);
 
   return (
     <>
@@ -101,7 +95,6 @@ function MessageChats() {
             value={newMessageAuth}
             onChange={changeAuth}
           />
-
           <TextField
             multiline
             size="small"
@@ -113,7 +106,6 @@ function MessageChats() {
             value={newMessageText}
             onChange={changeText}
           />
-
           <Button
             size="small"
             variant="outlined"
@@ -123,54 +115,22 @@ function MessageChats() {
           >
             Send
           </Button>
-
-          <div>
-            {messageStore.map((obj) =>
-              obj.text !== "" ? (
-                <div key={obj.messageId}>
-                  <p>You: "{obj.text}"</p>
-                  <p>
-                    {" "}
-                    {obj.nameTo}:"{obj.robot}"{" "}
-                  </p>{" "}
-                  <Divider variant="middle" />
-                </div>
-              ) : null
-            )}
-          </div>
+          <Box>
+            {messageStore[messageStore.length - 1].text ? (
+              <div key={messageStore[messageStore.length - 1].messageId}>
+                <p>You: {messageStore[messageStore.length - 1].text}</p>
+                <p>
+                  {messageStore[messageStore.length - 1].nameTo}: {robotText}
+                </p>
+                <Divider variant="middle" />
+              </div>
+            ) : null}
+          </Box>
         </Box>
-        <List>
-          {" "}
-          <Typography sx={{ mb: 1 }} variant="h6" component="div">
-            Chats:
-          </Typography>
-          {filterChats.map((obj) =>
-            obj.nameTo !== "" ? (
-              <ListItem key={obj.messageId} alignItems="center">
-                <Button
-                  component={Link}
-                  to={`/chats/${obj.nameTo}`}
-                  color="primary"
-                >
-                  <ListItemIcon sx={{ minWidth: 40 }}>
-                    <FolderIcon color="primary" />
-                  </ListItemIcon>
-                  {obj.nameTo}
-                </Button>
-                <IconButton
-                  aria-label="delete"
-                  size="small"
-                  onClick={() => deleteHandler(obj.chatId)}
-                >
-                  <DeleteForeverIcon fontSize="small" color="primary" />
-                </IconButton>
-              </ListItem>
-            ) : null
-          )}
-        </List>
+        <Chats />
       </Box>
     </>
   );
 }
 
-export default MessageChats;
+export default Message;
