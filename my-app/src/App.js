@@ -5,6 +5,7 @@ import MessageComponent from "./Components/MessegeComponent/MessageComponent";
 import Profile from "./Components/ProfileComponent/profile";
 import PersonalChat from "./Components/PersonalChatComponent/personalChat";
 import Pokemons from "./Components/PokemonComponent/PokemonComponent";
+import Pexels from "./Components/PexelsAPIComponent/PexelsComponent";
 
 console.log("render");
 
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/chats/:name" component={PersonalChat} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/pokemons" component={Pokemons} />
+          <Route exact path="/pexels" component={Pexels} />
         </BrowserRouter>
       </div>
     </>

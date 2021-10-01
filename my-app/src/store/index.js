@@ -3,6 +3,7 @@ import profileReducer from "./storeProfile";
 import pokemonsReducer from "./storePokemon";
 import chatsReducer from "./storeChats";
 import messageReducer from "./storeMessage";
+import pexelsReducer from "./storePexels";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
@@ -11,6 +12,7 @@ const rootReducers = combineReducers({
   pokemonsReducer,
   chatsReducer,
   messageReducer,
+  pexelsReducer,
 });
 
 const store = createStore(
