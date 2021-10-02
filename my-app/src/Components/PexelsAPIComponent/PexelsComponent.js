@@ -1,26 +1,30 @@
 // import { createClient } from "pexels";
 import {
   Button,
+  CircularProgress,
+  Grid,
   ImageList,
   Link,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { Box } from "@material-ui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhotoPexels } from "../../actions/pexelsAction";
+import { getPhotoPexels, errPexels } from "../../actions/pexelsAction";
 import PexelsItem from "../PexelsItem/PexelsItem";
 
 function Pexels() {
   const myKeyAuth = "563492ad6f91700001000001aba9b78c123546b3a6e4ed9ecaad016b";
   let page_number = 1;
 
-  const storePexels = useSelector((state) => state.pexelsReducer);
+  const storePexels = useSelector((state) => state.pexelsReducer.photoList);
+  const error = useSelector((state) => state.pexelsReducer.errorPexeles);
   const dispatch = useDispatch();
 
   const [textSearch, setTextSearch] = useState("");
   const [prevSearch, setPrevSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   //   1. способ с помощью библиотеки npm pexels (достаточно простой)
 
@@ -37,6 +41,8 @@ function Pexels() {
     e.preventDefault();
     setPrevSearch(textSearch);
     setTextSearch("");
+    setIsLoading(true);
+    dispatch(errPexels(false));
     dispatch(getPhotoPexels(page_number, textSearch, myKeyAuth));
   };
 
@@ -44,6 +50,10 @@ function Pexels() {
     page_number++;
     dispatch(getPhotoPexels(page_number, prevSearch, myKeyAuth));
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [storePexels]);
 
   return (
     <Box
@@ -94,7 +104,27 @@ function Pexels() {
           Search
         </Button>
       </Box>
-
+      {isLoading ? <CircularProgress color="success" /> : null}
+      {error ? (
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Typography variant="h4" component="p" color="error">
+            Sorry, something went wrong =(
+          </Typography>
+          <Button
+            color="error"
+            size="small"
+            variant="outlined"
+            onClick={submitHandler}
+          >
+            Try again
+          </Button>
+        </Grid>
+      ) : null}
       <ImageList cols={3}>
         {storePexels.map((obj) => (
           <PexelsItem key={obj.id} photo={obj} />
