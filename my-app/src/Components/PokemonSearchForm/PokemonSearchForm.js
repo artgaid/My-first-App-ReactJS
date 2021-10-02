@@ -1,3 +1,5 @@
+import { TextField } from "@material-ui/core";
+import { Box } from "@material-ui/system";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchPokemon } from "../../actions/pokemonAction";
@@ -5,7 +7,7 @@ import useDebounce from "./useDebounce";
 
 const PokemonSearchForm = () => {
   const [text, setText] = useState("");
-  const debounceValue = useDebounce(text, 1000);
+  const debounceValue = useDebounce(text, 3000);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,12 +18,20 @@ const PokemonSearchForm = () => {
   }, [debounceValue, dispatch]);
 
   return (
-    <input
-      type="text"
-      placeholder="What is this pokemon?"
-      value={text}
-      onChange={(e) => setText(e.target.value)}
-    />
+    <>
+      <Box>
+        <TextField
+          color="warning"
+          size="small"
+          id="standard-basic"
+          variant="standard"
+          type="text"
+          label="ADD Pokemon"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+      </Box>
+    </>
   );
 };
 

@@ -27,6 +27,7 @@ export const getPokemons = () => (dispatch) => {
         fetch(data.results[i].url)
           .then((response) => response.json())
           .then((data) => {
+            console.log(data, " fetch");
             dispatch(addPokemons(data));
           });
       }

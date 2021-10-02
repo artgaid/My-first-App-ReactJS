@@ -1,12 +1,20 @@
+import { Grid } from "@material-ui/core";
 import PokemonList from "../PokemonList/PokemonList";
 import PokemonSearchForm from "../PokemonSearchForm/PokemonSearchForm";
 
 function Pokemons() {
   return (
-    <div className="pokemons">
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: "100vh" }}
+    >
       <PokemonSearchForm />
       <PokemonList />
-    </div>
+    </Grid>
   );
 }
 

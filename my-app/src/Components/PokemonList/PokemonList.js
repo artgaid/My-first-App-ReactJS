@@ -1,3 +1,4 @@
+import { ImageList } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemons } from "../../actions/pokemonAction";
@@ -12,13 +13,15 @@ const PokemonList = () => {
   }, [dispatch]);
 
   return (
-    <ul>
-      {pokemons?.length
-        ? pokemons.map((el) => {
-            return <PokemonItem key={el.id} pokemon={el} />;
-          })
-        : null}{" "}
-    </ul>
+    <>
+      <ImageList cols={4}>
+        {pokemons?.length
+          ? pokemons.map((el) => {
+              return <PokemonItem key={el.id} pokemon={el} />;
+            })
+          : null}{" "}
+      </ImageList>
+    </>
   );
 };
 

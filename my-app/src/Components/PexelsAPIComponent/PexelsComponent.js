@@ -36,7 +36,6 @@ function Pexels() {
 
   //   2. способ с помощью fetch запросов (но мы попробуем классический)
 
-  console.log(storePexels, "store");
   const submitHandler = (e) => {
     e.preventDefault();
     setPrevSearch(textSearch);
