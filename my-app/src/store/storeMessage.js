@@ -8,7 +8,6 @@ const initialState = {
   messageList: [
     {
       text: "",
-      nameTo: "",
       messageId: 0,
       chatId: 0,
     },
@@ -35,10 +34,7 @@ const messageReducer = (state = initialState, { type, payload }) => {
     case ADD_ROBOT_MESSAGE:
       return {
         ...state,
-        messageRobot: [
-          ...state.messageRobot,
-          { text: payload, robotId: state.messageRobot.length },
-        ],
+        messageRobot: [...state.messageRobot, payload],
       };
 
     default:

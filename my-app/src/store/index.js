@@ -4,6 +4,7 @@ import pokemonsReducer from "./storePokemon";
 import chatsReducer from "./storeChats";
 import messageReducer from "./storeMessage";
 import pexelsReducer from "./storePexels";
+import userReducer from "./storeUser";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
@@ -13,6 +14,7 @@ const rootReducers = combineReducers({
   chatsReducer,
   messageReducer,
   pexelsReducer,
+  userReducer,
 });
 
 const store = createStore(
