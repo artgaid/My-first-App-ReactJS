@@ -9,7 +9,7 @@ const MessagesList = ({ chatId }) => {
 
   return (
     <>
-      <p> {chatName ? chatName : null} </p>
+      <p> {chatName} </p>
       <List>
         {chatsStore
           .filter((el) => el.id === Number(chatId))[0]

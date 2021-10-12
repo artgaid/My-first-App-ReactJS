@@ -1,7 +1,6 @@
 import {
   ADD_CHAT,
   ADD_MESSAGE_IN_CHAT,
-  ADD_ROBOT_IN_CHAT,
   DELETE_CHAT,
   SET_CHAT,
 } from "./types/chatsTypes";
@@ -11,7 +10,7 @@ const initialState = [];
 const chatsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case DELETE_CHAT:
-      return state.filter((el) => el.chatId !== payload);
+      return state.filter((el) => el.id !== payload);
 
     case ADD_CHAT:
       return [...state, payload];
@@ -20,14 +19,6 @@ const chatsReducer = (state = initialState, { type, payload }) => {
       return payload;
 
     case ADD_MESSAGE_IN_CHAT:
-      return state.map((el) => {
-        if (el.id === payload.chatId) {
-          return { ...el, messages: [...el.messages, payload] };
-        }
-        return el;
-      });
-
-    case ADD_ROBOT_IN_CHAT:
       return state.map((el) => {
         if (el.id === payload.chatId) {
           return { ...el, messages: [...el.messages, payload] };

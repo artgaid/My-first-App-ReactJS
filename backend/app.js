@@ -77,7 +77,7 @@ app.get("/chats", (req, res) => {
 app.post("/chats", (req, res) => {
   const newObj = req.body;
   chats.push(newObj);
-  res.json(chats);
+  res.json(newObj);
 });
 
 app.delete("/chats", (req, res) => {
@@ -85,9 +85,11 @@ app.delete("/chats", (req, res) => {
   const deleted = chats.find((el) => el.id === id);
   if (deleted) {
     chats = chats.filter((el) => el.id !== id);
-    res.status(200).json(chats);
+    return res.status(200).json();
   } else {
-    res.status(404).json({ message: "Chat you are looking for doesn't exist" });
+    return res
+      .status(404)
+      .json({ message: "Chat you are looking for doesn't exist" });
   }
 });
 
@@ -100,7 +102,7 @@ app.post("/chats/messages/:id", (req, res) => {
     }
     return el;
   });
-  res.json(chats);
+  res.json(newMessage);
 });
 
 app.listen(3001, () => {

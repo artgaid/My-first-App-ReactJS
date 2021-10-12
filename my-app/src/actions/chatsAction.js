@@ -1,7 +1,6 @@
 import {
   ADD_CHAT,
   ADD_MESSAGE_IN_CHAT,
-  ADD_ROBOT_IN_CHAT,
   DELETE_CHAT,
   SET_CHAT,
 } from "../store/types/chatsTypes";
@@ -26,14 +25,9 @@ export const addMessageInChat = (message) => ({
   payload: message,
 });
 
-export const addRobotInChat = (robot) => ({
-  type: ADD_ROBOT_IN_CHAT,
-  payload: robot,
-});
-
 export const chatRobotAnswer = (robot) => (dispatch) => {
   const timer = setTimeout(() => {
-    dispatch(addRobotInChat(robot));
+    dispatch(addMessageInChat(robot));
     clearTimeout(timer);
   }, 2000);
 };
@@ -53,18 +47,19 @@ export const postChats = (chatItem) => (dispatch) => {
     body: JSON.stringify(chatItem),
   })
     .then((response) => response.json())
-    .then((newData) => dispatch(setChats(newData)));
+    .then((newData) => dispatch(addChats(newData)));
 };
 
 export const delChats = (id) => (dispatch) => {
   fetch(`http://localhost:3001/chats?id=${id}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
   })
-    .then((response) => response.json())
-    .then((delData) => dispatch(setChats(delData)));
+    .then((response) => {
+      if (response.status === 200) {
+        dispatch(deleteChats(id));
+      }
+    })
+    .catch((err) => console.log("ERROR :" + err));
 };
 
 export const postMessage = (messageItem) => (dispatch) => {
@@ -76,20 +71,17 @@ export const postMessage = (messageItem) => (dispatch) => {
     body: JSON.stringify(messageItem),
   })
     .then((response) => response.json())
-    .then((newData) => dispatch(setChats(newData)));
+    .then((newData) => dispatch(addMessageInChat(newData)));
 };
 
 export const postRobotAnswer = (answer) => (dispatch) => {
-  const timer = setTimeout(() => {
-    fetch(`http://localhost:3001/chats/messages/${answer.chatId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(answer),
-    })
-      .then((response) => response.json())
-      .then((newData) => dispatch(setChats(newData)));
-    clearTimeout(timer);
-  }, 1000);
+  fetch(`http://localhost:3001/chats/messages/${answer.chatId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(answer),
+  })
+    .then((response) => response.json())
+    .then((newData) => dispatch(chatRobotAnswer(newData)));
 };

@@ -4,7 +4,11 @@ import { useEffect, useState, useRef } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
-import { postMessage, postRobotAnswer } from "../../../actions/chatsAction";
+import {
+  getChats,
+  postMessage,
+  postRobotAnswer,
+} from "../../../actions/chatsAction";
 import MessagesList from "../MessageList/messageList";
 
 const PersonalChat = () => {
@@ -60,7 +64,8 @@ const PersonalChat = () => {
 
   useEffect(() => {
     ref?.current.focus();
-  }, [chatsStore]);
+    dispatch(getChats());
+  }, [chatsStore, dispatch]);
 
   return (
     <>

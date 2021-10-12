@@ -17,7 +17,6 @@ function ChatsList() {
   };
 
   useEffect(() => {
-    console.log("use");
     dispatch(getChats());
   }, [dispatch]);
 
