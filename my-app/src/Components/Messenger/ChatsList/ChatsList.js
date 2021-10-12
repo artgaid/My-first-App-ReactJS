@@ -5,15 +5,21 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteChats } from "../../../actions/chatsAction";
+import { delChats, getChats } from "../../../actions/chatsAction";
+import { useEffect } from "react";
 
 function ChatsList() {
   const chatsStore = useSelector((state) => state.chatsReducer);
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
-    dispatch(deleteChats(id));
+    dispatch(delChats(id));
   };
+
+  useEffect(() => {
+    console.log("use");
+    dispatch(getChats());
+  }, [dispatch]);
 
   return (
     <>
@@ -24,7 +30,11 @@ function ChatsList() {
         {chatsStore.map((obj) =>
           obj.chatName !== "" ? (
             <ListItem key={obj.id} alignItems="center">
-              <Button component={Link} to={`/chats/${obj.id}`} color="primary">
+              <Button
+                component={Link}
+                to={`/chats/messages/${obj.id}`}
+                color="primary"
+              >
                 <ListItemIcon sx={{ minWidth: 40 }}>
                   <FolderIcon color="primary" />
                 </ListItemIcon>

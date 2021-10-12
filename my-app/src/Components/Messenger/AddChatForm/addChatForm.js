@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import { Box } from "@material-ui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addChats } from "../../../actions/chatsAction";
+import { postChats } from "../../../actions/chatsAction";
 
 function AddChatForm() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function AddChatForm() {
   const addChatsHandler = (e) => {
     e.preventDefault();
     setTextField("");
-    dispatch(addChats(newChat));
+    dispatch(postChats(newChat));
   };
 
   return (

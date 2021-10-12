@@ -4,10 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addMessageInChat,
-  chatRobotAnswer,
-} from "../../../actions/chatsAction";
+import { postMessage, postRobotAnswer } from "../../../actions/chatsAction";
 import MessagesList from "../MessageList/messageList";
 
 const PersonalChat = () => {
@@ -26,7 +23,7 @@ const PersonalChat = () => {
   };
 
   const robotAnswer = {
-    text: "",
+    robotText: "",
     id: 0,
     chatId: Number(id),
   };
@@ -35,7 +32,7 @@ const PersonalChat = () => {
     for (let i = 0; i < chatsStore.length; i++) {
       if (chatsStore[i].id === Number(idChat)) {
         newMessage.id = chatsStore[i].messages.length;
-        robotAnswer.id = chatsStore[i].messages.length;
+        robotAnswer.id = "Robot" + chatsStore[i].messages.length;
       }
     }
   };
@@ -45,17 +42,17 @@ const PersonalChat = () => {
     filterChatStore(id);
 
     if (newMessage.id > 0) {
-      robotAnswer.text = "I AM GROOOOT";
-      dispatch(chatRobotAnswer(robotAnswer));
+      robotAnswer.robotText = "I AM GROOOOT";
+      dispatch(postRobotAnswer(robotAnswer));
     } else {
       if (newMessage.text !== "") {
-        robotAnswer.text = "Hi, I am Groot !";
-        dispatch(chatRobotAnswer(robotAnswer));
+        robotAnswer.robotText = "Hi, I am Groot !";
+        dispatch(postRobotAnswer(robotAnswer));
       }
     }
 
     if (newMessage.text !== "") {
-      dispatch(addMessageInChat(newMessage));
+      dispatch(postMessage(newMessage));
       setNewMessageText((prev) => (prev = ""));
     }
     return;
