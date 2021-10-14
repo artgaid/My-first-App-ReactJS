@@ -1,16 +1,12 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeCheck } from "../../actions/checkboxActions";
 
 const Form = () => {
-  const [check, setCheck] = useState(false);
+  const checkboxValue = useSelector((state) => state.profileReducer.checkbox);
   const dispatch = useDispatch();
 
   const inputChangeCheck = (e) => {
-    setCheck((prev) => (prev = e.target.checked));
     dispatch(changeCheck());
-
-    console.log(check, e.target.id);
   };
 
   return (
@@ -19,10 +15,10 @@ const Form = () => {
         <input
           type="checkbox"
           id="checkbox"
-          value={check}
+          value={checkboxValue}
           onChange={inputChangeCheck}
         />
-        Checkbox
+        Test Checkbox
       </div>
     </>
   );

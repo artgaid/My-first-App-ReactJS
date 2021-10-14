@@ -5,11 +5,9 @@ import AppRouter from "./Components/AppRouter/appRouter";
 function App() {
   return (
     <>
-      <div>
-        <BrowserRouter>
-          <AppRouter />
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </>
   );
 }

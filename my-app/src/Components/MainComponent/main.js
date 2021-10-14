@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { Box } from "@material-ui/system";
 import { Link } from "react-router-dom";
 
@@ -11,13 +11,19 @@ function Main() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          flexDirection: { xs: "column", md: "blok" },
+          flexDirection: "column",
         }}
       >
         <Typography variant="button" component="p">
           My App is on ReactJS
         </Typography>
-        <Box>
+        <Grid
+          container
+          mt={2}
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+        >
           <Button
             sx={{
               ":hover": {
@@ -62,7 +68,7 @@ function Main() {
           >
             API Pexels
           </Button>
-        </Box>
+        </Grid>
       </Box>
     </>
   );

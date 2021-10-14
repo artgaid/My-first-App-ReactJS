@@ -65,7 +65,7 @@ const PersonalChat = () => {
   useEffect(() => {
     ref?.current.focus();
     dispatch(getChats());
-  }, [chatsStore, dispatch]);
+  }, [dispatch]);
 
   return (
     <>

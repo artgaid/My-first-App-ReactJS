@@ -25,13 +25,6 @@ export const addMessageInChat = (message) => ({
   payload: message,
 });
 
-export const chatRobotAnswer = (robot) => (dispatch) => {
-  const timer = setTimeout(() => {
-    dispatch(addMessageInChat(robot));
-    clearTimeout(timer);
-  }, 2000);
-};
-
 export const getChats = () => (dispatch) => {
   fetch("http://localhost:3001/chats")
     .then((response) => response.json())
@@ -75,13 +68,17 @@ export const postMessage = (messageItem) => (dispatch) => {
 };
 
 export const postRobotAnswer = (answer) => (dispatch) => {
-  fetch(`http://localhost:3001/chats/messages/${answer.chatId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(answer),
-  })
-    .then((response) => response.json())
-    .then((newData) => dispatch(chatRobotAnswer(newData)));
+  const timer = setTimeout(() => {
+    fetch(`http://localhost:3001/chats/messages/${answer.chatId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(answer),
+    })
+      .then((response) => response.json())
+      .then((newData) => dispatch(addMessageInChat(newData)));
+
+    clearTimeout(timer);
+  }, 2000);
 };

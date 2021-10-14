@@ -10,9 +10,10 @@ import { Box } from "@material-ui/system";
 import { useDispatch } from "react-redux";
 import { deletePokemons } from "../../actions/pokemonAction";
 
-/* eslint-disable jsx-a11y/alt-text */
 const PokemonItem = ({ pokemon }) => {
   const dispatch = useDispatch();
+
+  if (!pokemon) return null;
 
   const deleteHandler = () => {
     dispatch(deletePokemons(pokemon.id));
