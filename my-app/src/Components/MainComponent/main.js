@@ -7,7 +7,7 @@ function Main() {
     <>
       <Box
         sx={{
-          m: 2,
+          mt: 4,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
