@@ -84,6 +84,7 @@ function Pexels() {
           m: 5,
           "& button": {
             height: "5ch",
+            ml: 1,
           },
         }}
         noValidate
@@ -93,7 +94,7 @@ function Pexels() {
         <TextField
           size="small"
           id="outlined-name"
-          label="Search for photos"
+          label="Search for image"
           type="text"
           name="search"
           value={textSearch}
@@ -129,15 +130,17 @@ function Pexels() {
           <PexelsItem key={obj.id} photo={obj} />
         ))}
       </ImageList>
-      <Button
-        size="large"
-        color="success"
-        variant="contained"
-        type="button"
-        onClick={showMoreHandler}
-      >
-        Show more
-      </Button>
+      {storePexels.length > 0 && (
+        <Button
+          size="large"
+          color="success"
+          variant="contained"
+          type="button"
+          onClick={showMoreHandler}
+        >
+          Show more
+        </Button>
+      )}
     </Box>
   );
 }

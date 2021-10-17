@@ -10,6 +10,7 @@ import {
   postRobotAnswer,
 } from "../../../actions/chatsAction";
 import MessagesList from "../MessageList/messageList";
+import { Typography } from "@material-ui/core";
 
 const PersonalChat = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const PersonalChat = () => {
   const dispatch = useDispatch();
   const ref = useRef(null);
   const chatsStore = useSelector((state) => state.chatsReducer);
+  const chatName = chatsStore.filter((el) => el.id === Number(id))[0].chatName;
 
   const [newMessageText, setNewMessageText] = useState("");
 
@@ -46,8 +48,13 @@ const PersonalChat = () => {
     filterChatStore(id);
 
     if (newMessage.id > 0) {
-      robotAnswer.robotText = "I AM GROOOOT";
-      dispatch(postRobotAnswer(robotAnswer));
+      if (newMessage.id / 4) {
+        robotAnswer.robotText = "GRoOoOoT ???";
+        dispatch(postRobotAnswer(robotAnswer));
+      } else {
+        robotAnswer.robotText = "I AM GROOOOT";
+        dispatch(postRobotAnswer(robotAnswer));
+      }
     } else {
       if (newMessage.text !== "") {
         robotAnswer.robotText = "Hi, I am Groot !";
@@ -69,19 +76,21 @@ const PersonalChat = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 2fr)",
-        }}
-      >
+      <Box>
+        <Typography
+          textAlign="center"
+          sx={{ mb: 1 }}
+          variant="button"
+          component="p"
+        >
+          Your chat with {chatName}
+        </Typography>
+        <MessagesList chatName={chatName} chatId={id} />
         <Box
           component="form"
           sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-            "& button": { m: 2, width: "25ch" },
-            display: "grid",
-            gridTemplateRows: "repeat(3, 0.5fr)",
+            "& .MuiTextField-root": { m: 1, width: "40%" },
+            "& button": { m: 1, width: "20%", height: 40 },
           }}
           noValidate
           autoComplete="off"
@@ -98,7 +107,7 @@ const PersonalChat = () => {
             onChange={(e) => setNewMessageText(e.target.value)}
           />
           <Button
-            size="small"
+            // size="large"
             variant="outlined"
             color="primary"
             type="submit"
@@ -107,7 +116,6 @@ const PersonalChat = () => {
             Send
           </Button>
         </Box>
-        <MessagesList chatId={id} />
       </Box>
     </>
   );

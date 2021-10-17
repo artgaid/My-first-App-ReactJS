@@ -6,7 +6,7 @@ import Pexels from "../PexelsAPIComponent/PexelsComponent";
 import AuthPage from "../AuthComponent/authComponent";
 import SecureRoute from "./SecureRoute/secureRoute";
 import MainMessenger from "../Messenger/mainMessenger";
-import PersonalChat from "../Messenger/PersonalChatComponent/personalChat";
+import PersonalChat from "../Messenger/PersonalChat/personalChat";
 
 const AppRouter = () => {
   const history = useHistory();

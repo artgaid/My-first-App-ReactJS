@@ -5,18 +5,16 @@ import ProfileCheckbox from "../ProfileCheckbox/ProfileCheckbox";
 
 function Profile() {
   const stateProfile = useSelector((state) => state.profileReducer);
-  console.log(stateProfile);
 
   const dispatch = useDispatch();
   const handlerDelete = (text, id) => {
-    console.log("delete", text);
     // dispatch({ type: "DELETE_PROFILE_ITEM", payload: id });
     dispatch(deleteProfileItem(id));
   };
 
   return (
     <>
-      <p> My Profile </p>
+      <p> My test Profile store </p>
       <ProfileForm />
       <div>
         {stateProfile?.profileList?.map((el) => (

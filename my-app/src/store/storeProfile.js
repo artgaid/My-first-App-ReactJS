@@ -6,9 +6,9 @@ import {
 
 const initialState = {
   profileList: [
-    { name: "first", id: 0 },
-    { name: "two", id: 1 },
-    { name: "three", id: 2 },
+    { name: "Test store 1", id: 0 },
+    { name: "Test store 2", id: 1 },
+    { name: "Test store 3", id: 2 },
   ],
   checkbox: false,
 };
